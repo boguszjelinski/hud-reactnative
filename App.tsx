@@ -10,30 +10,22 @@ import {
   PermissionsAndroid, 
   Platform, 
   StatusBar, 
-  StyleSheet, useColorScheme, View, 
+  StyleSheet,
+  View, 
   Text } from 'react-native';
 import {
   SafeAreaProvider,
-  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import Geolocation, {
-  GeoError,
-  GeoPosition,
-} from "@react-native-community/geolocation";
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle='dark-content' />
       <AppContent />
     </SafeAreaProvider>
   );
 }
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
   const [speedKmh, setSpeedKmh] = useState<number>(0);
 
   useEffect(() => {
@@ -69,9 +61,8 @@ function AppContent() {
     };
 
     requestPermission();
-    StatusBar.setHidden(true, 'slide'); // setHidden(hidden, animation)
+
     return () => {
-      StatusBar.setHidden(false, 'slide'); 
       if (watchId !== null) {
         Geolocation.clearWatch(watchId);
       }
@@ -80,7 +71,8 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-       <Text style={styles.mirroredText}>
+      <StatusBar hidden={true} />
+      <Text style={styles.mirroredText}>
         {speedKmh.toFixed(0)}
       </Text>
     </View>
@@ -91,11 +83,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
-    justifyContent: "center",
+    textAlignVertical: 'top',
     alignItems: "center",
   },
-   mirroredText: {
-    fontSize: 500,
+  mirroredText: {
+    fontSize: 330,
     color: "white",
     fontWeight: "bold",
     transform: [{ scaleY: -1 }],
